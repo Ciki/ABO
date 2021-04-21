@@ -51,10 +51,11 @@ class Item
 		if ($convert2cents) {
 			$amount *= 100;
 		}
-		if ($amount !== floor($amount)) {
+		// due to float arithmetics the $amount may get nasty, ex. 1052.1 * 100 = 105209.99999999999
+		if (round($amount) - $amount >= 0.1) {
 			throw new InvalidArgumentException('Parameter $amount must be either whole number representing amount in cents or decimal number with 2 decimal places, given ' . $amount);
 		}
-		$this->amount = intval($amount);
+		$this->amount = round($amount);
 		return $this;
 	}
 
