@@ -55,7 +55,7 @@ class Item
 		if (round($amount) - $amount >= 0.1) {
 			throw new InvalidArgumentException('Parameter $amount must be either whole number representing amount in cents or decimal number with 2 decimal places, given ' . $amount);
 		}
-		$this->amount = round($amount);
+		$this->amount = (int) round($amount);
 		return $this;
 	}
 
