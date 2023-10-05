@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-		"nette/utils": "^3.0",
+		"nette/utils": "^3.0|^4.0",
 		"php": ">=7.4.0"
 	},
 	"prefer-stable": true,
