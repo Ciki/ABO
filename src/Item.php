@@ -32,6 +32,9 @@ final class Item
 	/** @var string max 4(lines)*35 chars */
 	private string $message = '';
 
+	/** @var string max 35 chars */
+	private string $recipientName = '';
+
 	/** @var string account prefix max 6 numbers */
 	private string $senderAccountPrefix = '';
 
@@ -148,6 +151,14 @@ final class Item
 	}
 
 
+	public function setRecipientName(string $name): self
+	{
+		$maxLen = 35;
+		$this->recipientName = substr(Utils::toAscii($name), 0, $maxLen);
+		return $this;
+	}
+
+
 	/**
 	 * @param bool $omitSenderAccount true if the sender number is already in the group header
 	 * @return string
@@ -159,7 +170,16 @@ final class Item
 			$res .= Utils::formatAccountNumber($this->senderAccountNumber, $this->senderAccountPrefix) . ' ';
 		}
 		$res .= sprintf("%s %d %s %s%04d %s ", Utils::formatAccountNumber($this->accountNumber, $this->accountPrefix), $this->amount, $this->varSym, $this->bankCode, $this->constSym, $this->specSym);
-		$res .= $this->message ? ('AV:' . $this->message) : '';
+
+		$extra = [];
+		if ($this->message) {
+			$extra[] = 'AV:' . $this->message;
+		}
+		if ($this->recipientName) {
+			$extra[] = 'NP:' . $this->recipientName;
+		}
+
+		$res .= implode(' ', $extra);
 		$res .= "\r\n";
 
 		return $res;
