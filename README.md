@@ -1,43 +1,65 @@
 # ABO generator for PHP
 
-	$date = new \DateTimeImmutable();
+PHP generator for ABO file format (compatible with Czech/Slovak banking standards).
 
-	$abo = new Abo();
-	$abo->setClientNumer('222780978');
-	$abo->setOrganization('Ceska narodni zdravotni pojistovna', true);
-	$abo->setDate($date);
-//	$abo->setSecurityKey('123456', '654321');
+## Installation
 
-	$account = $abo->addAccountFile(File::TYPE_UHRADA);
-	$account->setBankCode('0300');
-//	$account->setBankDepartment('082');
+```bash
+composer require sukovf/abo
+```
 
-	$group = $account->addGroup();
-	$group->setAccount('122780922');
-	$group->setDate($date);
-	$group->addItem('174-1999738514/0300', 2000.5, '2220009813')
-		->setConstSym('8')
-		->setSpecSym('93653')
-		->setMessage('první část');
+## Usage
 
-	$group->addItem('5152046/0300', 2000, '2220000598')
-		->setConstSym('8')
-		->setSpecSym('93654');
+```php
+<?php
 
-	$group->addItem('192359658/0300', 2000, '2220000004')
-		->setConstSym('8')
-		->setSpecSym('93655');
+use snoblucha\Abo\Abo;
+use snoblucha\Abo\File;
+use snoblucha\Abo\Item;
 
+$date = new \DateTimeImmutable();
 
-	$group->addItem('174-0346006514/0300', 2000, '2220497222')
-		->setConstSym('8')
-		->setSpecSym('93656')
-		->setMessage('první část');
+$abo = new Abo();
+$abo->setClientNumber('222780978');
+$abo->setOrganization('Ceska narodni zdravotni pojistovna', true);
+$abo->setDate($date);
+// $abo->setSecurityKey('123456', '654321');
 
-	$group->addItem('492732514/0300', 2000, '2220000811')
-		->setConstSym('8')
-		->setSpecSym('93657');
+$file = $abo->addFile(File::TYPE_UHRADA);
+$file->setSenderBankCode('0300');
+// $file->setBankDepartment('082');
 
+$group = $file->addGroup();
+$group->setSenderAccount('122780922');
+$group->setDueDate($date);
 
+// Add items
+$item1 = new Item('174-1999738514/0300', 2000.5, '2220009813');
+$item1->setConstSym('8')
+      ->setSpecSym('93653')
+      ->setMessage('první část');
+$group->addItem($item1);
 
-	echo '<pre>' . $abo->generate() . '</pre>';
+$item2 = new Item('5152046/0300', 2000, '2220000598');
+$item2->setConstSym('8')
+      ->setSpecSym('93654');
+$group->addItem($item2);
+
+$item3 = new Item('192359658/0300', 2000, '2220000004');
+$item3->setConstSym('8')
+      ->setSpecSym('93655');
+$group->addItem($item3);
+
+$item4 = new Item('174-0346006514/0300', 2000, '2220497222');
+$item4->setConstSym('8')
+      ->setSpecSym('93656')
+      ->setMessage('první část');
+$group->addItem($item4);
+
+$item5 = new Item('492732514/0300', 2000, '2220000811');
+$item5->setConstSym('8')
+      ->setSpecSym('93657');
+$group->addItem($item5);
+
+echo '<pre>' . $abo->generate() . '</pre>';
+```
