@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace snoblucha\Abo;
 
 use InvalidArgumentException;
 
-class Item
+final class Item
 {
 	/** @var string recipient account prefix max 6 numbers */
 	private string $accountPrefix = '';
@@ -91,7 +92,7 @@ class Item
 	public function setSenderAccount(string $fullAccountNumber): self
 	{
 		$account = explode('/', $fullAccountNumber);
-//		$this->senderBankCode = $account[1];
+		// $this->senderBankCode = $account[1];
 		if (strpos($account[0], '-') !== false) {
 			$number = explode('-', $account[0]);
 			$this->senderAccountPrefix = $number[0];
@@ -108,7 +109,7 @@ class Item
 	{
 		$len = 10;
 		if (!empty($number) && !is_numeric($number) || strlen($number) > $len) {
-			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length $len!");
+			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length {$len}!");
 		}
 		$this->varSym = $number;
 		return $this;
@@ -119,7 +120,7 @@ class Item
 	{
 		$len = 4;
 		if (!empty($number) && !is_numeric($number) || strlen($number) > $len) {
-			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length $len!");
+			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length {$len}!");
 		}
 		$this->constSym = $number;
 		return $this;
@@ -130,7 +131,7 @@ class Item
 	{
 		$len = 10;
 		if (!empty($number) && !is_numeric($number) || strlen($number) > $len) {
-			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length $len!");
+			throw new InvalidArgumentException("Parameter \$number must be numeric string of max length {$len}!");
 		}
 		$this->specSym = $number;
 		return $this;
@@ -163,6 +164,4 @@ class Item
 
 		return $res;
 	}
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace snoblucha\Abo;
@@ -6,11 +7,11 @@ namespace snoblucha\Abo;
 use InvalidArgumentException;
 use snoblucha\Abo\Group;
 
-class File
+final class File
 {
-	/** @type int 4 numbers */
-	const TYPE_UHRADA = 1501;
-	const TYPE_INKASO = 1502;
+	/** @var int 4 numbers */
+	const int TYPE_UHRADA = 1501;
+	const int TYPE_INKASO = 1502;
 
 
 	/** @var int max 3 numbers */
@@ -61,7 +62,7 @@ class File
 	{
 		$len = 4;
 		if (strlen($bankCode) !== $len || !is_numeric($bankCode)) {
-			throw new InvalidArgumentException("Parameter \$bankCode must be numeric and $len characters long");
+			throw new InvalidArgumentException("Parameter \$bankCode must be numeric and {$len} characters long");
 		}
 		$this->senderBankCode = $bankCode;
 		return $this;
@@ -72,7 +73,7 @@ class File
 	{
 		$len = 3;
 		if (strlen($number) !== $len || !is_numeric($number)) {
-			throw new InvalidArgumentException("Parameter \$number must be numeric and $len characters long");
+			throw new InvalidArgumentException("Parameter \$number must be numeric and {$len} characters long");
 		}
 		$this->bankDepartment = $number;
 		return $this;
@@ -96,6 +97,4 @@ class File
 		$res .= "5 +\r\n";
 		return $res;
 	}
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace snoblucha\Abo;
@@ -7,10 +8,10 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
 
-class Abo
+final class Abo
 {
-	/** @type string 4 chars */
-	const HEADER = 'UHL1';
+	/** @var string 4 chars */
+	const string HEADER = 'UHL1';
 
 
 	/** @var ?string 20 chars */
@@ -32,7 +33,7 @@ class Abo
 	private array $items = [];
 
 
-	public function __construct(string $organization = "")
+	public function __construct(string $organization = '')
 	{
 		$this->setOrganization($organization);
 		$this->setDate();
@@ -42,7 +43,7 @@ class Abo
 	/**
 	 * Set the sender organization name. Less then 20 chars.
 	 */
-	public function setOrganization(string $organization, bool $truncate = false)
+	public function setOrganization(string $organization, bool $truncate = false): self
 	{
 		$organization = Utils::toAscii($organization);
 		$maxLen = 20;
@@ -50,7 +51,7 @@ class Abo
 			if ($truncate) {
 				$organization = substr($organization, 0, $maxLen);
 			} else {
-				throw new InvalidArgumentException("Parameter \$organization must be max $maxLen characters long");
+				throw new InvalidArgumentException("Parameter \$organization must be max {$maxLen} characters long.");
 			}
 		}
 		$this->organization = strtoupper($organization);
@@ -116,6 +117,4 @@ class Abo
 
 		return $res;
 	}
-
-
 }

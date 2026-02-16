@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace snoblucha\Abo;
@@ -6,7 +7,7 @@ namespace snoblucha\Abo;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-class Group
+final class Group
 {
 	/** @var ?string max 6 numbers */
 	private ?string $semderAccountPrefix = null;
@@ -24,7 +25,7 @@ class Group
 	/**
 	 * Set the account for the full group. The account will not be rendered in items.
 	 */
-	public function setSenderAccount(string $number, string $prefix = null): void
+	public function setSenderAccount(string $number, ?string $prefix = null): void
 	{
 		$this->senderAccountNumber = $number;
 		$this->semderAccountPrefix = $prefix;
@@ -78,6 +79,4 @@ class Group
 		$res .= "3 +\r\n";
 		return $res;
 	}
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace snoblucha\Abo;
@@ -6,10 +7,9 @@ namespace snoblucha\Abo;
 use InvalidArgumentException;
 use Nette\Utils\Strings;
 
-class Utils
+final class Utils
 {
-
-	public static function formatAccountNumber(string $number, string $prefix = null): string
+	public static function formatAccountNumber(string $number, ?string $prefix = null): string
 	{
 		$res = '';
 		if ($prefix) {
@@ -22,7 +22,7 @@ class Utils
 			throw new InvalidArgumentException('Parameter $number must be numeric string of max length 10!');
 		}
 
-//		$res .= sprintf('%010d', $number);
+		// $res .= sprintf('%010d', $number);
 		$res .= $number;
 		return $res;
 	}
@@ -32,6 +32,4 @@ class Utils
 	{
 		return Strings::toAscii($s);
 	}
-
-
 }
